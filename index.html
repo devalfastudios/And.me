@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Особисте Портфоліо | Андрій</title>
+    
+    <!-- Google Fonts: Roboto & Material Symbols Outlined -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                    },
+                    colors: {
+                        md: {
+                            primary: '#6750A4',
+                            'on-primary': '#FFFFFF',
+                            'primary-container': '#EADDFF',
+                            'on-primary-container': '#21005D',
+                            secondary: '#625B71',
+                            'on-secondary': '#FFFFFF',
+                            'secondary-container': '#E8DEF8',
+                            'on-secondary-container': '#1D192B',
+                            tertiary: '#7D5260',
+                            'on-tertiary': '#FFFFFF',
+                            'tertiary-container': '#FFD8E4',
+                            'on-tertiary-container': '#31111D',
+                            surface: '#FEF7FF',
+                            'on-surface': '#1D1B20',
+                            'surface-variant': '#E7E0EC',
+                            'on-surface-variant': '#49454F',
+                            outline: '#79747E',
+                        }
+                    },
+                    boxShadow: {
+                        'md-1': '0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)',
+                        'md-2': '0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)',
+                        'md-3': '0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.30)',
+                        'glow-purple': '0 0 30px -5px rgba(103, 80, 164, 0.6)',
+                        'glow-pink': '0 0 30px -5px rgba(125, 82, 96, 0.6)',
+                    },
+                    borderRadius: {
+                        'md-xs': '4px',
+                        'md-s': '8px',
+                        'md-m': '12px',
+                        'md-l': '16px',
+                        'md-xl': '28px',
+                        'md-full': '9999px',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Ultra Smooth Physics Transitions */
+        * {
+            transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Hide default cursor on desktop for custom interactive cursor */
+        @media (min-width: 768px) {
+            body {
+                cursor: none;
+            }
+            a, button, input, textarea, .tilt-card {
+                cursor: none !important;
+            }
+        }
+
+        /* Custom Fluid Physics Cursor */
+        #custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(103, 80, 164, 0.5);
+            border: 2px solid rgba(208, 188, 255, 0.8);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, width 0.3s ease, height 0.3s ease;
+            backdrop-filter: blur(2px);
+            mix-blend-mode: difference;
+        }
+
+        #custom-cursor.hovered {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(208, 188, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.9);
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        /* Material Ripple Animation */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple-animation 650ms cubic-bezier(0, 0, 0.2, 1);
+            pointer-events: none;
+        }
+        .dark .ripple-effect {
+            background-color: rgba(208, 188, 255, 0.35);
+        }
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        /* Dynamic Animated Ambient Mesh Background */
+        .ambient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.45;
+            pointer-events: none;
+            z-index: 0;
+            will-change: transform;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ambient-orb-1 {
+            top: -10%;
+            left: -10%;
+            width: 55vw;
+            height: 55vw;
+            background: radial-gradient(circle, #6750A4 0%, rgba(103, 80, 164, 0) 70%);
+            animation: orbFloat1 22s ease-in-out infinite alternate;
+        }
+        .ambient-orb-2 {
+            bottom: 5%;
+            right: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, #7D5260 0%, rgba(125, 82, 96, 0) 70%);
+            animation: orbFloat2 25s ease-in-out infinite alternate;
+        }
+        .ambient-orb-3 {
+            top: 40%;
+            left: 25%;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, #D0BCFF 0%, rgba(208, 188, 255, 0) 70%);
+            animation: orbFloat3 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes orbFloat1 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(80px, 100px) scale(1.2); }
+        }
+        @keyframes orbFloat2 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-90px, -70px) scale(1.15); }
+        }
+        @keyframes orbFloat3 {
+            0% { transform: translate(0, 0) scale(0.9); }
+            100% { transform: translate(60px, -80px) scale(1.1); }
+        }
+
+        /* Glassmorphism Navigation */
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Ultra-smooth Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(45px) scale(0.95);
+            filter: blur(12px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity, filter;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.12s; }
+        .reveal-delay-2 { transition-delay: 0.24s; }
+        .reveal-delay-3 { transition-delay: 0.36s; }
+
+        /* 3D Tilt Card Physics */
+        .tilt-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            will-change: transform;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+
+        /* Card Glow Border Effect */
+        .glow-card {
+            position: relative;
+        }
+        .glow-card::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: linear-gradient(135deg, rgba(103, 80, 164, 0.7), rgba(208, 188, 255, 0.2), rgba(125, 82, 96, 0.7));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+        .glow-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Scroll Progress Indicator Bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3.5px;
+            background: linear-gradient(90deg, #6750A4, #D0BCFF, #7D5260, #EFB8C8);
+            z-index: 1000;
+            width: 0%;
+            transition: width 0.1s ease-out;
+            box-shadow: 0 0 10px rgba(208, 188, 255, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-[#FEF7FF] dark:bg-[#141218] text-[#1D1B20] dark:text-[#E6E0E9] font-sans antialiased transition-colors duration-500 min-h-screen flex flex-col overflow-x-hidden selection:bg-[#EADDFF] selection:text-[#21005D]">
+
+    <!-- Custom Interactive Fluid Cursor -->
+    <div id="custom-cursor" class="hidden md:block"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Ambient Mesh Interactive Background Orbs -->
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
+
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav bg-[#FEF7FF]/80 dark:bg-[#141218]/80 border-b border-[#CAC4D0]/30 dark:border-[#49454F]/30 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative z-10">
+            
+            <a href="#hero" class="flex items-center gap-2 font-bold text-xl tracking-tight text-[#6750A4] dark:text-[#D0BCFF] ripple rounded-md-s px-2 py-1 group hover-trigger">
+                <span class="material-symbols-outlined text-2xl group-hover:rotate-12 transition-transform duration-500">sentiment_satisfied</span>
+                <span>Андрій.<span class="text-[#7D5260] dark:text-[#EFB8C8]">me</span></span>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
+                <a href="#about" class="px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Про мене</a>
+                <a href="#interests" class="px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Інтереси</a>
+                <a href="#strengths" class="px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Сильні сторони</a>
+                <a href="#goals" class="px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Цілі</a>
+                <a href="#works" class="px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Роботи</a>
+                <a href="#reflection" class="px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Рефлексія</a>
+            </nav>
+
+            <div class="flex items-center gap-2">
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="p-2.5 rounded-md-full hover:bg-[#E7E0EC] dark:hover:bg-[#49454F] text-[#49454F] dark:text-[#CAC4D0] transition-transform duration-300 active:scale-90 ripple flex items-center justify-center magnetic-btn hover-trigger" aria-label="Змінити тему">
+                    <span id="theme-icon" class="material-symbols-outlined text-xl">light_mode</span>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2.5 rounded-md-full hover:bg-[#E7E0EC] dark:hover:bg-[#49454F] transition-colors ripple">
+                    <span class="material-symbols-outlined text-2xl">menu</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#EADDFF]/95 dark:bg-[#21005D]/95 backdrop-blur-xl px-4 pt-2 pb-6 border-b border-[#CAC4D0]/30 transition-all duration-300">
+            <div class="flex flex-col space-y-2 mt-2">
+                <a href="#about" class="mobile-nav-link px-4 py-3 rounded-md-m hover:bg-white/40 dark:hover:bg-white/10 font-medium text-sm flex items-center gap-3">
+                    <span class="material-symbols-outlined">person</span> Про мене
+                </a>
+                <a href="#interests" class="mobile-nav-link px-4 py-3 rounded-md-m hover:bg-white/40 dark:hover:bg-white/10 font-medium text-sm flex items-center gap-3">
+                    <span class="material-symbols-outlined">interests</span> Інтереси
+                </a>
+                <a href="#strengths" class="mobile-nav-link px-4 py-3 rounded-md-m hover:bg-white/40 dark:hover:bg-white/10 font-medium text-sm flex items-center gap-3">
+                    <span class="material-symbols-outlined">auto_awesome</span> Сильні сторони
+                </a>
+                <a href="#goals" class="mobile-nav-link px-4 py-3 rounded-md-m hover:bg-white/40 dark:hover:bg-white/10 font-medium text-sm flex items-center gap-3">
+                    <span class="material-symbols-outlined">flag</span> Цілі
+                </a>
+                <a href="#works" class="mobile-nav-link px-4 py-3 rounded-md-m hover:bg-white/40 dark:hover:bg-white/10 font-medium text-sm flex items-center gap-3">
+                    <span class="material-symbols-outlined">star</span> Роботи та досягнення
+                </a>
+                <a href="#reflection" class="mobile-nav-link px-4 py-3 rounded-md-m hover:bg-white/40 dark:hover:bg-white/10 font-medium text-sm flex items-center gap-3">
+                    <span class="material-symbols-outlined">psychology</span> Рефлексія
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-20 relative z-10">
+        
+        <section id="hero" class="min-h-[90vh] flex items-center justify-center relative px-4 sm:px-6 lg:px-8 py-16">
+            <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left reveal">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-md-full bg-[#EADDFF] dark:bg-[#4F378B] text-[#21005D] dark:text-[#EADDFF] text-xs sm:text-sm font-semibold tracking-wide shadow-md-1 hover-trigger">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                        <span>Особисте Портфоліо • 15 років</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-6xl font-black text-[#1D1B20] dark:text-[#E6E0E9] tracking-tight leading-tight">
+                        Привіт! Я <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#6750A4] via-[#7D5260] to-[#D0BCFF]">Андрій</span> 
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-[#49454F] dark:text-[#CAC4D0] max-w-2xl font-normal leading-relaxed">
+                        Ласкаво просимо до мого власного інтерактивного простору! Тут зібрано інформацію про мене, мої зацікавлення, сильні сторони, досягнення та особисті думки.
+                    </p>
+
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#about" class="bg-[#6750A4] dark:bg-[#D0BCFF] text-white dark:text-[#381E72] px-7 py-4 rounded-md-full font-medium text-base shadow-md-2 hover:shadow-glow-purple transition-all duration-300 flex items-center gap-3 ripple magnetic-btn hover-trigger">
+                            <span>Дізнатися більше</span>
+                            <span class="material-symbols-outlined text-xl">arrow_downward</span>
+                        </a>
+                        <a href="#works" class="border-2 border-[#79747E] dark:border-[#938F99] text-[#6750A4] dark:text-[#D0BCFF] hover:bg-[#EADDFF]/40 dark:hover:bg-[#4F378B]/30 px-7 py-4 rounded-md-full font-medium text-base transition-all duration-300 flex items-center gap-3 ripple magnetic-btn hover-trigger">
+                            <span class="material-symbols-outlined text-xl">folder_special</span>
+                            <span>Мої роботи</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Photo Card with Smooth 3D Tilt -->
+                <div class="lg:col-span-5 flex flex-col items-center justify-center reveal reveal-delay-2">
+                    <div class="tilt-card glow-card w-72 h-72 sm:w-88 sm:h-88 rounded-md-xl bg-gradient-to-tr from-[#6750A4] via-[#7D5260] to-[#D0BCFF] p-1.5 shadow-md-3 hover-trigger">
+                        <div class="w-full h-full rounded-[24px] bg-[#FEF7FF] dark:bg-[#1D1B20] overflow-hidden flex flex-col items-center justify-center relative group text-center p-4">
+                            
+                            <img src="photo-main.jpg" 
+                                 alt="Андрій - Головне фото" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 rounded-[20px]"
+                                 onerror="this.style.display='none'; document.getElementById('photo-main-placeholder').style.display='flex';">
+                            
+                            <div id="photo-main-placeholder" class="hidden flex-col items-center justify-center text-center space-y-2 text-[#6750A4] dark:text-[#D0BCFF] p-4">
+                                <span class="material-symbols-outlined text-6xl animate-bounce">add_a_photo</span>
+                                <span class="text-base font-bold">Додай фото сюди</span>
+                                <span class="text-xs bg-[#EADDFF] dark:bg-[#4F378B] px-3 py-1 rounded-md-full font-mono text-[#21005D] dark:text-[#EADDFF]">photo-main.jpg</span>
+                            </div>
+
+                            <div class="absolute bottom-3 left-3 right-3 p-3 bg-white/80 dark:bg-[#141218]/80 backdrop-blur-md rounded-md-m border border-white/20 shadow-md-2 flex items-center justify-between">
+                                <span class="text-xs font-bold text-[#1D1B20] dark:text-[#E6E0E9]">Андрій, 15 років</span>
+                                <span class="text-xs text-[#7D5260] dark:text-[#EFB8C8] font-bold">Україна 🇺🇦</span>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="mt-3 text-xs text-[#79747E] dark:text-[#938F99] font-mono">📁 Фото профілю: photo-main.jpg</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-24 px-4 sm:px-6 lg:px-8 bg-[#E7E0EC]/30 dark:bg-[#1D1B20]/40 backdrop-blur-sm">
+            <div class="max-w-5xl mx-auto space-y-12">
+                <div class="text-center space-y-3 reveal">
+                    <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Хто я такий</span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold">Про Мене</h2>
+                    <div class="w-20 h-1.5 bg-gradient-to-r from-[#6750A4] to-[#7D5260] mx-auto rounded-md-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                    
+                    <!-- Secondary Photo Placeholder -->
+                    <div class="md:col-span-5 flex flex-col items-center reveal">
+                        <div class="tilt-card glow-card w-full h-80 rounded-md-l bg-[#EADDFF] dark:bg-[#4F378B] overflow-hidden border border-[#CAC4D0]/40 relative flex flex-col items-center justify-center p-4 shadow-md-2 hover-trigger">
+                            <img src="photo-about.jpg" 
+                                 alt="Андрій - Про мене" 
+                                 class="w-full h-full object-cover rounded-md-m"
+                                 onerror="this.style.display='none'; document.getElementById('photo-about-placeholder').style.display='flex';">
+                            
+                            <div id="photo-about-placeholder" class="hidden flex-col items-center justify-center text-center space-y-2 text-[#6750A4] dark:text-[#D0BCFF]">
+                                <span class="material-symbols-outlined text-5xl">image</span>
+                                <span class="text-sm font-bold">Фото для розповіді про себе</span>
+                                <span class="text-xs bg-white/70 dark:bg-black/50 px-3 py-1 rounded-md-full font-mono">photo-about.jpg</span>
+                            </div>
+                        </div>
+                        <span class="mt-2 text-xs text-[#79747E] dark:text-[#938F99] font-mono">📁 Фото: photo-about.jpg</span>
+                    </div>
+
+                    <!-- Editable Content Card for Andriy -->
+                    <div class="md:col-span-7 bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 sm:p-8 rounded-md-l shadow-md-2 border border-[#CAC4D0]/40 space-y-4 reveal reveal-delay-2 glow-card hover-trigger">
+                        <div class="flex items-center gap-2 text-[#6750A4] dark:text-[#D0BCFF] font-bold text-xl">
+                            <span class="material-symbols-outlined text-2xl">edit_note</span>
+                            <h3>Моя історія</h3>
+                        </div>
+                            
+                            <div class="space-y-2 pt-1">
+                                <p>• <strong>Вік / Навчання:</strong> Мені 15 років, навчаюся у 9-Б класі.</p>
+                                <p>• <strong>Девіз:</strong> Завджи треба іти вперед .</p>
+                                <p>• <strong>Коротко про мене:</strong>Люблю  IT-сферу, чудово розуміюся і кожен день прогресую. Захоплююсь не тільки цим, а і футболом.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="interests" class="py-24 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto space-y-12">
+                <div class="text-center space-y-3 reveal">
+                    <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Чим я захоплююся</span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold">Мої Інтереси</h2>
+                    <div class="w-20 h-1.5 bg-gradient-to-r from-[#6750A4] to-[#7D5260] mx-auto rounded-md-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l shadow-md-1 border border-[#CAC4D0]/40 space-y-4 hover:shadow-md-3 transition-all reveal hover-trigger">
+                        <div class="w-14 h-14 rounded-md-m bg-[#EADDFF] dark:bg-[#4F378B] text-[#21005D] dark:text-[#EADDFF] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-3xl">sports_soccer</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Спорт & Активність</h3>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            Футбол, Батмінтон, Волейбол.
+                        </p>
+                    </div>
+
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l shadow-md-1 border border-[#CAC4D0]/40 space-y-4 hover:shadow-md-3 transition-all reveal reveal-delay-1 hover-trigger">
+                        <div class="w-14 h-14 rounded-md-m bg-[#E8DEF8] dark:bg-[#4A4458] text-[#1D192B] dark:text-[#E8DEF8] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-3xl">sports_esports</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Геймінг</h3>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            Мої улюблені ігри це: Counter Strike 2, Minecraft, Roblox, Brawl Stars.
+                        </p>
+                    </div>
+
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l shadow-md-1 border border-[#CAC4D0]/40 space-y-4 hover:shadow-md-3 transition-all reveal reveal-delay-2 hover-trigger">
+                        <div class="w-14 h-14 rounded-md-m bg-[#FFD8E4] dark:bg-[#633B48] text-[#31111D] dark:text-[#FFD8E4] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-3xl">headphones</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Музика & Подкасти</h3>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            Одного жанру немає, їх багато. Короче, як сподобається.
+                        </p>
+                    </div>
+
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l shadow-md-1 border border-[#CAC4D0]/40 space-y-4 hover:shadow-md-3 transition-all reveal hover-trigger">
+                        <div class="w-14 h-14 rounded-md-m bg-[#EADDFF] dark:bg-[#4F378B] text-[#21005D] dark:text-[#EADDFF] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-3xl">menu_book</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Книги & Наука</h3>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            [Вкажи цікаві книжки, науково-популярні статті чи теми, що тебе надихають].
+                        </p>
+                    </div>
+
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l shadow-md-1 border border-[#CAC4D0]/40 space-y-4 hover:shadow-md-3 transition-all reveal reveal-delay-1 hover-trigger">
+                        <div class="w-14 h-14 rounded-md-m bg-[#E8DEF8] dark:bg-[#4A4458] text-[#1D192B] dark:text-[#E8DEF8] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-3xl">movie</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Відео & Креатив</h3>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            Умію монтувати відео, редагувати фото та красиво. Використовую усі можливі методи щоб вийшов результат на всі 200% із 100.
+                        </p>
+                    </div>
+
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l shadow-md-1 border border-[#CAC4D0]/40 space-y-4 hover:shadow-md-3 transition-all reveal reveal-delay-2 hover-trigger">
+                        <div class="w-14 h-14 rounded-md-m bg-[#FFD8E4] dark:bg-[#633B48] text-[#31111D] dark:text-[#FFD8E4] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-3xl">devices</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Технології & AI</h3>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            Використовую Gemini, Claude, ChatGPT, DeepSeek, Grok, Copilot- у якості ШІ інструментів. Маю девайси які часто використовую, а саме: Ноутбук Acer Nitro V16 Lite ( RTX 3050 6GB, Intel Core i5 13400h, 16 GB DDR 5 ), мишка Attak shark x11, клавіатура механіка на червоних свічах Marvo KG901, телефон Xiaomi Redmi Note 13 4G NFC та багато іншого .
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="strengths" class="py-24 px-4 sm:px-6 lg:px-8 bg-[#E7E0EC]/30 dark:bg-[#1D1B20]/40">
+            <div class="max-w-5xl mx-auto space-y-12">
+                <div class="text-center space-y-3 reveal">
+                    <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Мої суперсили</span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold">Сильні Сторони</h2>
+                    <div class="w-20 h-1.5 bg-gradient-to-r from-[#6750A4] to-[#7D5260] mx-auto rounded-md-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l border border-[#CAC4D0]/40 space-y-3 reveal hover-trigger">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[#6750A4] dark:text-[#D0BCFF] text-3xl">groups</span>
+                            <h3 class="text-lg font-bold">Командна робота</h3>
+                        </div>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            Умію працювати у команді, слухаю та можу доповнити за потреби. Найголовніше робити усе узгодженно
+                        </p>
+                    </div>
+
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l border border-[#CAC4D0]/40 space-y-3 reveal reveal-delay-1 hover-trigger">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[#6750A4] dark:text-[#D0BCFF] text-3xl">psychology</span>
+                            <h3 class="text-lg font-bold">Логічне мислення</h3>
+                        </div>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            [Напиши про своє вміння швидко вирішувати задачі та знаходити виходи з нестандартних ситуацій].
+                        </p>
+                    </div>
+
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l border border-[#CAC4D0]/40 space-y-3 reveal hover-trigger">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[#6750A4] dark:text-[#D0BCFF] text-3xl">timer</span>
+                            <h3 class="text-lg font-bold">Дисциплінованість</h3>
+                        </div>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            [Розкажи про те, як ти дотримуєшся дедлайнів, плануєш день та досягаєш поставленої мети].
+                        </p>
+                    </div>
+
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l border border-[#CAC4D0]/40 space-y-3 reveal reveal-delay-1 hover-trigger">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[#6750A4] dark:text-[#D0BCFF] text-3xl">auto_awesome</span>
+                            <h3 class="text-lg font-bold">Креативність</h3>
+                        </div>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            [Опиши свою фантазію, прагнення створювати щось оригінальне та цікаве].
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="goals" class="py-24 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-5xl mx-auto space-y-12">
+                <div class="text-center space-y-3 reveal">
+                    <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Куди я прямую</span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold">Мої Цілі</h2>
+                    <div class="w-20 h-1.5 bg-gradient-to-r from-[#6750A4] to-[#7D5260] mx-auto rounded-md-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- Short term -->
+                    <div class="tilt-card glow-card bg-[#EADDFF]/40 dark:bg-[#4F378B]/20 p-6 sm:p-8 rounded-md-l border border-[#6750A4]/20 space-y-4 reveal hover-trigger">
+                        <div class="flex items-center gap-3 text-[#21005D] dark:text-[#EADDFF]">
+                            <span class="material-symbols-outlined text-3xl">event_upcoming</span>
+                            <h3 class="text-2xl font-bold">Найближчі цілі (1 рік)</h3>
+                        </div>
+                        <ul class="space-y-3 text-sm sm:text-base text-[#49454F] dark:text-[#CAC4D0]">
+                            <li class="flex items-start gap-2.5">
+                                <span class="material-symbols-outlined text-emerald-500 text-xl">check_circle</span>
+                                <span>[ заповни: Успішно закінчити навчальний рік з хорошими оцінками]</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="material-symbols-outlined text-emerald-500 text-xl">check_circle</span>
+                                <span>[Покращити рівень володіння англійською мовою]</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="material-symbols-outlined text-emerald-500 text-xl">check_circle</span>
+                                <span>[Прочитати [N] корисних книг чи освоїти нову навичку]</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Long term -->
+                    <div class="tilt-card glow-card bg-[#FFD8E4]/40 dark:bg-[#633B48]/20 p-6 sm:p-8 rounded-md-l border border-[#7D5260]/20 space-y-4 reveal reveal-delay-1 hover-trigger">
+                        <div class="flex items-center gap-3 text-[#31111D] dark:text-[#FFD8E4]">
+                            <span class="material-symbols-outlined text-3xl">flag</span>
+                            <h3 class="text-2xl font-bold">Стратегічні цілі (3-5 років)</h3>
+                        </div>
+                        <ul class="space-y-3 text-sm sm:text-base text-[#49454F] dark:text-[#CAC4D0]">
+                            <li class="flex items-start gap-2.5">
+                                <span class="material-symbols-outlined text-[#7D5260] dark:text-[#EFB8C8] text-xl">stars</span>
+                                <span>[Обрати спеціальність та вступити до бажаного закладу вищої освіти]</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="material-symbols-outlined text-[#7D5260] dark:text-[#EFB8C8] text-xl">stars</span>
+                                <span>[Реалізувати свій власний великий проєкт]</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="material-symbols-outlined text-[#7D5260] dark:text-[#EFB8C8] text-xl">stars</span>
+                                <span>[Подорожувати та відкривати нові захоплення]</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="works" class="py-24 px-4 sm:px-6 lg:px-8 bg-[#E7E0EC]/30 dark:bg-[#1D1B20]/40">
+            <div class="max-w-6xl mx-auto space-y-12">
+                <div class="text-center space-y-3 reveal">
+                    <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Моя портфоліо-галерея</span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold">Мої Роботи та Досягнення</h2>
+                    <div class="w-20 h-1.5 bg-gradient-to-r from-[#6750A4] to-[#7D5260] mx-auto rounded-md-full"></div>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Work 1 -->
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] rounded-md-l overflow-hidden shadow-md-2 border border-[#CAC4D0]/40 flex flex-col justify-between reveal hover-trigger">
+                        <div class="h-52 bg-[#EADDFF] dark:bg-[#4F378B] relative flex flex-col items-center justify-center p-2 text-center group">
+                            <img src="work-1.jpg" 
+                                 alt="Робота 1" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.style.display='none'; document.getElementById('work-1-placeholder').style.display='flex';">
+                            <div id="work-1-placeholder" class="hidden flex-col items-center justify-center space-y-1 text-[#6750A4] dark:text-[#D0BCFF]">
+                                <span class="material-symbols-outlined text-5xl">folder_zip</span>
+                                <span class="text-xs font-bold">Фото для роботи №1</span>
+                                <span class="text-[10px] bg-white/70 dark:bg-black/50 px-2 py-0.5 rounded-md-full font-mono">work-1.jpg</span>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-[#6750A4] dark:text-[#D0BCFF]">Мій Проєкт</span>
+                            <h3 class="text-xl font-bold">[Назва твоєї першої роботи]</h3>
+                            <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                                [ заповни: презентація, проєкт, власне відео, малюнок або шкільна робота].
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Work 2 -->
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] rounded-md-l overflow-hidden shadow-md-2 border border-[#CAC4D0]/40 flex flex-col justify-between reveal reveal-delay-1 hover-trigger">
+                        <div class="h-52 bg-[#E8DEF8] dark:bg-[#4A4458] relative flex flex-col items-center justify-center p-2 text-center group">
+                            <img src="work-2.jpg" 
+                                 alt="Робота 2" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.style.display='none'; document.getElementById('work-2-placeholder').style.display='flex';">
+                            <div id="work-2-placeholder" class="hidden flex-col items-center justify-center space-y-1 text-[#1D192B] dark:text-[#E8DEF8]">
+                                <span class="material-symbols-outlined text-5xl">palette</span>
+                                <span class="text-xs font-bold">Фото для роботи №2</span>
+                                <span class="text-[10px] bg-white/70 dark:bg-black/50 px-2 py-0.5 rounded-md-full font-mono">work-2.jpg</span>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-[#625B71] dark:text-[#CCC2DC]">Творчий здобуток</span>
+                            <h3 class="text-xl font-bold">[G9 Launcher]</h3>
+                            <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                                [Програма яка дозволяє грати у Minecraft. Досі продовжує оновлюватись].
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Work 3 -->
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] rounded-md-l overflow-hidden shadow-md-2 border border-[#CAC4D0]/40 flex flex-col justify-between reveal reveal-delay-2 hover-trigger">
+                        <div class="h-52 bg-[#FFD8E4] dark:bg-[#633B48] relative flex flex-col items-center justify-center p-2 text-center group">
+                            <img src="work-3.jpg" 
+                                 alt="Робота 3" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.style.display='none'; document.getElementById('work-3-placeholder').style.display='flex';">
+                            <div id="work-3-placeholder" class="hidden flex-col items-center justify-center space-y-1 text-[#7D5260] dark:text-[#EFB8C8]">
+                                <span class="material-symbols-outlined text-5xl">auto_stories</span>
+                                <span class="text-xs font-bold">Фото для роботи №3</span>
+                                <span class="text-[10px] bg-white/70 dark:bg-black/50 px-2 py-0.5 rounded-md-full font-mono">work-3.jpg</span>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-[#7D5260] dark:text-[#EFB8C8]">Ініціатива</span>
+                            <h3 class="text-xl font-bold">[Назва третьої роботи]</h3>
+                            <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                                [Заповни тут інформацію про ще один свій здобуток або захоплення].
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Achievement 1 -->
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] rounded-md-l overflow-hidden shadow-md-2 border border-[#CAC4D0]/40 flex flex-col justify-between reveal hover-trigger">
+                        <div class="h-52 bg-[#FFD8E4] dark:bg-[#633B48] relative flex flex-col items-center justify-center p-2 text-center group">
+                            <img src="achievement-1.jpg" 
+                                 alt="Досягнення 1" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.style.display='none'; document.getElementById('ach-1-placeholder').style.display='flex';">
+                            <div id="ach-1-placeholder" class="hidden flex-col items-center justify-center space-y-1 text-[#7D5260] dark:text-[#EFB8C8]">
+                                <span class="material-symbols-outlined text-5xl">emoji_events</span>
+                                <span class="text-xs font-bold">Фото диплома / грамоти №1</span>
+                                <span class="text-[10px] bg-white/70 dark:bg-black/50 px-2 py-0.5 rounded-md-full font-mono">achievement-1.jpg</span>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-[#7D5260] dark:text-[#EFB8C8]">Нагорода / Диплом</span>
+                            <h3 class="text-xl font-bold">[Назва першого досягнення]</h3>
+                            <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                                [Вкажи, за що саме було отримано грамоту, кубок або дипломи].
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Achievement 2 -->
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] rounded-md-l overflow-hidden shadow-md-2 border border-[#CAC4D0]/40 flex flex-col justify-between reveal reveal-delay-1 hover-trigger">
+                        <div class="h-52 bg-[#EADDFF] dark:bg-[#4F378B] relative flex flex-col items-center justify-center p-2 text-center group">
+                            <img src="achievement-2.jpg" 
+                                 alt="Досягнення 2" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.style.display='none'; document.getElementById('ach-2-placeholder').style.display='flex';">
+                            <div id="ach-2-placeholder" class="hidden flex-col items-center justify-center space-y-1 text-[#6750A4] dark:text-[#D0BCFF]">
+                                <span class="material-symbols-outlined text-5xl">military_tech</span>
+                                <span class="text-xs font-bold">Фото диплома / грамоти №2</span>
+                                <span class="text-[10px] bg-white/70 dark:bg-black/50 px-2 py-0.5 rounded-md-full font-mono">achievement-2.jpg</span>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-[#6750A4] dark:text-[#D0BCFF]">Перемога / Сертифікат</span>
+                            <h3 class="text-xl font-bold">[Назва другого досягнення]</h3>
+                            <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                                [Опиши олімпіаду, змагання або конкурс, де ти зайняв призове місце].
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="reflection" class="py-24 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto space-y-12">
+                <div class="text-center space-y-3 reveal">
+                    <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Аналіз та роздуми</span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold">Моя Рефлексія</h2>
+                    <div class="w-20 h-1.5 bg-gradient-to-r from-[#6750A4] to-[#7D5260] mx-auto rounded-md-full"></div>
+                </div>
+
+                <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 sm:p-10 rounded-md-l shadow-md-2 border border-[#CAC4D0]/40 space-y-8 reveal hover-trigger">
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3 text-[#6750A4] dark:text-[#D0BCFF] font-bold text-xl">
+                            <span class="material-symbols-outlined text-3xl">psychology_alt</span>
+                            <h3>Мої думки про свій розвиток</h3>
+                        </div>
+                        <p class="text-sm sm:text-base text-[#49454F] dark:text-[#CAC4D0] leading-relaxed italic bg-[#EADDFF]/30 dark:bg-[#4F378B]/20 p-5 rounded-md-m border-l-4 border-[#6750A4]">
+                            "Андрію, у цьому блоці ти можеш поділитися своїми особистими думками про навчання, підсумки року, здобутий досвід та зміни в твоєму характерi!"
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+                        <div class="p-5 rounded-md-m bg-[#E8DEF8]/40 dark:bg-[#4A4458]/30 space-y-2 border border-[#CAC4D0]/30">
+                            <h4 class="font-bold text-base flex items-center gap-2">
+                                <span class="material-symbols-outlined text-amber-500">lightbulb</span> Головний урок року:
+                            </h4>
+                            <p class="text-xs sm:text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                                [Заповни думкою, наприклад: "Я зрозумів, що регулярна праця завжди дає кращий результат, ніж робота в останній момент..."]
+                            </p>
+                        </div>
+
+                        <div class="p-5 rounded-md-m bg-[#FFD8E4]/40 dark:bg-[#633B48]/30 space-y-2 border border-[#CAC4D0]/30">
+                            <h4 class="font-bold text-base flex items-center gap-2">
+                                <span class="material-symbols-outlined text-rose-500">favorite</span> Що мене надихає:
+                            </h4>
+                            <p class="text-xs sm:text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                                [Заповни думкою, наприклад: "Моя сім'я, вірні друзі та прагнення стати кращою версією себе щодня..."]
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating Action Button (FAB) -->
+    <button id="fab-top" class="fixed bottom-8 right-8 w-14 h-14 bg-[#EADDFF] dark:bg-[#4F378B] text-[#21005D] dark:text-[#EADDFF] rounded-md-xl shadow-md-3 hover:shadow-glow-purple transition-all duration-300 flex items-center justify-center opacity-0 pointer-events-none z-40 ripple magnetic-btn hover-trigger">
+        <span class="material-symbols-outlined text-2xl">arrow_upward</span>
+    </button>
+
+    <footer class="bg-[#FEF7FF] dark:bg-[#141218] border-t border-[#CAC4D0]/30 py-8 px-4 text-center text-sm text-[#49454F] dark:text-[#CAC4D0] relative z-10">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>©Особисте портфоліо Андрія.Створено з допомогою ШІ Інструментів</p>
+            <p class="flex items-center gap-1">
+                Site published on • <span class="font-medium text-[#6750A4] dark:text-[#D0BCFF]">GitHub</span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Custom Smooth Physics Cursor (LERP Logic)
+        const cursor = document.getElementById('custom-cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            // Lerp algorithm for buttery smooth inertia
+            cursorX += (mouseX - cursorX) * 0.18;
+            cursorY += (mouseY - cursorY) * 0.18;
+            
+            if (cursor) {
+                cursor.style.left = `${cursorX}px`;
+                cursor.style.top = `${cursorY}px`;
+            }
+
+            // Interactive Ambient Background Parallax based on mouse move
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const moveX = (mouseX - windowWidth / 2) / 35;
+            const moveY = (mouseY - windowHeight / 2) / 35;
+
+            const orb1 = document.querySelector('.ambient-orb-1');
+            const orb2 = document.querySelector('.ambient-orb-2');
+            const orb3 = document.querySelector('.ambient-orb-3');
+
+            if (orb1) orb1.style.transform = `translate(${moveX * 1.5}px, ${moveY * 1.5}px)`;
+            if (orb2) orb2.style.transform = `translate(${-moveX * 1.2}px, ${-moveY * 1.2}px)`;
+            if (orb3) orb3.style.transform = `translate(${moveY * 0.8}px, ${moveX * 0.8}px)`;
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Hover Effect on Cursor for Interactive Elements
+        const hoverTriggers = document.querySelectorAll('.hover-trigger, a, button, input, textarea');
+        hoverTriggers.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor && cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor && cursor.classList.remove('hovered'));
+        });
+
+        // 2. Scroll Reveal Animation via IntersectionObserver
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.12,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // 3. 3D Tilt Effect on Hover with Inertia Smoothness
+        const tiltCards = document.querySelectorAll('.tilt-card');
+        tiltCards.forEach(card => {
+            let cardRaf;
+
+            card.addEventListener('mousemove', (e) => {
+                cancelAnimationFrame(cardRaf);
+                cardRaf = requestAnimationFrame(() => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -9;
+                    const rotateY = ((x - centerX) / centerX) * 9;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                cancelAnimationFrame(cardRaf);
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            });
+        });
+
+        // 4. Magnetic Button Effect
+        const magneticBtns = document.querySelectorAll('.magnetic-btn');
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.28}px, ${y * 0.28}px)`;
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0px, 0px)';
+            });
+        });
+
+        // 5. Scroll Progress Indicator
+        const scrollProgress = document.getElementById('scroll-progress');
+        window.addEventListener('scroll', () => {
+            const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const currentScroll = window.scrollY;
+            const scrollPercentage = (currentScroll / totalScroll) * 100;
+            scrollProgress.style.width = scrollPercentage + '%';
+        });
+
+        // 6. Material Ripple Effect
+        document.addEventListener('click', function (e) {
+            const target = e.target.closest('.ripple');
+            if (!target) return;
+
+            const rect = target.getBoundingClientRect();
+            const circle = document.createElement('span');
+            const diameter = Math.max(rect.width, rect.height);
+            const radius = diameter / 2;
+
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${e.clientX - rect.left - radius}px`;
+            circle.style.top = `${e.clientY - rect.top - radius}px`;
+            circle.classList.add('ripple-effect');
+
+            const existingRipple = target.querySelector('.ripple-effect');
+            if (existingRipple) existingRipple.remove();
+
+            target.appendChild(circle);
+        });
+
+        // 7. Theme Toggle Handler
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                themeIcon.textContent = 'dark_mode';
+            } else {
+                document.documentElement.classList.add('dark');
+                themeIcon.textContent = 'light_mode';
+            }
+        });
+
+        // 8. Mobile Drawer Navigation
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 9. Floating Scroll-To-Top Button
+        const fabTop = document.getElementById('fab-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                fabTop.classList.remove('opacity-0', 'pointer-events-none');
+                fabTop.classList.add('opacity-100');
+            } else {
+                fabTop.classList.add('opacity-0', 'pointer-events-none');
+                fabTop.classList.remove('opacity-100');
+            }
+        });
+
+        fabTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
