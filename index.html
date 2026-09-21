@@ -2,7 +2,7 @@
 <html lang="uk" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Особисте Портфоліо | Андрій</title>
     
     <!-- Google Fonts: Roboto & Material Symbols Outlined -->
@@ -68,6 +68,43 @@
             transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        /* Safe-area support for phones with notches / home indicators */
+        html {
+            scroll-padding-top: calc(4rem + env(safe-area-inset-top, 0px));
+        }
+        header.glass-nav > div:first-child {
+            padding-top: env(safe-area-inset-top, 0px);
+        }
+        main.site-main {
+            padding-top: calc(5rem + env(safe-area-inset-top, 0px));
+        }
+        #fab-top {
+            margin-bottom: env(safe-area-inset-bottom, 0px);
+            margin-right: env(safe-area-inset-right, 0px);
+        }
+        footer {
+            padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+        }
+
+        /* Prevent horizontal scroll / overscroll jitter on mobile */
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Lighter, cheaper ambient blur on small screens (better mobile perf/battery) */
+        @media (max-width: 767px) {
+            .ambient-orb {
+                filter: blur(60px);
+                opacity: 0.35;
+            }
+            .ambient-orb-1, .ambient-orb-2, .ambient-orb-3 {
+                width: 80vw;
+                height: 80vw;
+            }
+        }
+
         /* Hide default cursor on desktop for custom interactive cursor */
         @media (min-width: 768px) {
             body {
@@ -91,9 +128,13 @@
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%) scale(1);
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, width 0.3s ease, height 0.3s ease;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, width 0.3s ease, height 0.3s ease, opacity 0.15s ease;
             backdrop-filter: blur(2px);
             mix-blend-mode: difference;
+        }
+
+        #custom-cursor.cursor-hidden {
+            opacity: 0;
         }
 
         #custom-cursor.hovered {
@@ -249,9 +290,300 @@
             transition: width 0.1s ease-out;
             box-shadow: 0 0 10px rgba(208, 188, 255, 0.8);
         }
+
+        /* ==========================================================
+           Custom Context Menu (Material You + glass, matches site)
+           ========================================================== */
+        :root {
+            --ctx-bg: rgba(243, 237, 247, 0.86);
+            --ctx-fg: #1D1B20;
+            --ctx-fg-var: #49454F;
+            --ctx-border: rgba(202, 196, 208, 0.7);
+            --ctx-hover: rgba(234, 221, 255, 0.75);
+            --ctx-accent: #6750A4;
+            --ctx-toast-bg: #322F35;
+            --ctx-toast-fg: #F5EFF7;
+        }
+        .dark {
+            --ctx-bg: rgba(33, 31, 38, 0.84);
+            --ctx-fg: #E6E0E9;
+            --ctx-fg-var: #CAC4D0;
+            --ctx-border: rgba(73, 69, 79, 0.75);
+            --ctx-hover: rgba(79, 55, 139, 0.45);
+            --ctx-accent: #D0BCFF;
+            --ctx-toast-bg: #E6E0E9;
+            --ctx-toast-fg: #322F35;
+        }
+
+        .ctx-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9990; /* below the custom cursor (9999) */
+            min-width: 264px;
+            padding: 8px;
+            border-radius: 22px;
+            background: var(--ctx-bg);
+            color: var(--ctx-fg);
+            backdrop-filter: blur(24px) saturate(1.25);
+            -webkit-backdrop-filter: blur(24px) saturate(1.25);
+            box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15),
+                        0px 1px 3px 0px rgba(0, 0, 0, 0.30),
+                        0 0 34px -8px rgba(103, 80, 164, 0.45);
+            font-family: 'Roboto', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: scale(0.9);
+            transition: opacity 0.18s ease,
+                        transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+                        visibility 0s linear 0.32s;
+        }
+        .ctx-menu.open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: scale(1);
+            transition-delay: 0s;
+        }
+        /* Same gradient outline as .glow-card, always visible */
+        .ctx-menu::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: linear-gradient(135deg, rgba(103, 80, 164, 0.75), rgba(208, 188, 255, 0.18), rgba(125, 82, 96, 0.75));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* Beat the global "* { transition: ... 0.5s }" rule inside the menu */
+        .ctx-menu *,
+        .ctx-toast {
+            transition: background-color 0.15s ease, color 0.15s ease, opacity 0.15s ease, transform 0.15s ease;
+        }
+
+        .ctx-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            padding: 10px 16px;
+            border: 0;
+            border-radius: 9999px;
+            background: transparent;
+            color: var(--ctx-fg);
+            font: 500 14px/20px 'Roboto', sans-serif;
+            text-align: left;
+        }
+        .ctx-ico {
+            font-size: 20px;
+            color: var(--ctx-fg-var);
+            flex: none;
+        }
+        .ctx-label {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .ctx-kbd {
+            margin-left: 24px;
+            font-size: 12px;
+            letter-spacing: 0.02em;
+            color: var(--ctx-fg-var);
+            opacity: 0.8;
+        }
+        .ctx-chev { margin-left: 8px; font-size: 20px; }
+
+        .ctx-item:hover,
+        .ctx-item:focus-visible,
+        .ctx-item.sub-open,
+        .ctx-round:hover,
+        .ctx-round:focus-visible {
+            outline: none;
+            background: var(--ctx-hover);
+            color: var(--ctx-accent);
+        }
+        .ctx-item:hover .ctx-ico,
+        .ctx-item:focus-visible .ctx-ico,
+        .ctx-item.sub-open .ctx-ico,
+        .ctx-round:hover .ctx-ico,
+        .ctx-round:focus-visible .ctx-ico,
+        .ctx-item.current .ctx-ico {
+            color: var(--ctx-accent);
+        }
+        .ctx-item.current { color: var(--ctx-accent); }
+        .ctx-item:disabled,
+        .ctx-round:disabled {
+            opacity: 0.38;
+            pointer-events: none;
+        }
+
+        /* Back / Forward / Reload row */
+        .ctx-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 4px;
+            padding: 2px 4px 4px;
+        }
+        .ctx-round {
+            width: 48px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 9999px;
+            background: transparent;
+            color: var(--ctx-fg-var);
+        }
+        /* Same rule as the site: hide the system cursor only where the custom one is shown */
+        @media (min-width: 768px) {
+            .ctx-menu, .ctx-item, .ctx-round { cursor: none !important; }
+        }
+
+        .ctx-sep {
+            height: 1px;
+            margin: 6px 12px;
+            background: var(--ctx-border);
+        }
+        .ctx-hint {
+            padding: 6px 16px 4px;
+            font-size: 11px;
+            letter-spacing: 0.03em;
+            color: var(--ctx-fg-var);
+            opacity: 0.7;
+        }
+
+        /* Staggered entrance for items */
+        .ctx-menu.open .ctx-item,
+        .ctx-menu.open .ctx-round {
+            animation: ctxItemIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation-delay: calc(var(--i, 0) * 16ms);
+        }
+        @keyframes ctxItemIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Ripple tint inside the menu */
+        .ctx-menu .ripple-effect { background-color: rgba(103, 80, 164, 0.28); }
+        .dark .ctx-menu .ripple-effect { background-color: rgba(208, 188, 255, 0.3); }
+
+        /* Snackbar (copy feedback) */
+        .ctx-toast {
+            position: fixed;
+            left: 50%;
+            bottom: 32px;
+            z-index: 9995;
+            padding: 12px 20px;
+            border-radius: 16px;
+            background: var(--ctx-toast-bg);
+            color: var(--ctx-toast-fg);
+            font: 500 14px/20px 'Roboto', sans-serif;
+            box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.30);
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, 16px);
+            transition: opacity 0.25s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ctx-toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .ctx-menu, .ctx-toast { transition-duration: 0.01s !important; }
+            .ctx-menu.open .ctx-item, .ctx-menu.open .ctx-round { animation: none; }
+        }
+        @media print {
+            .ctx-menu, .ctx-toast { display: none !important; }
+        }
+
+        /* ==========================================================
+           Custom Scrollbar (Material You, same palette as the site)
+           ========================================================== */
+        :root {
+            --sb-track: rgba(231, 224, 236, 0.55);
+            --sb-track-edge: rgba(202, 196, 208, 0.5);
+            --sb-thumb: linear-gradient(180deg, #6750A4 0%, #7D5260 100%);
+            --sb-thumb-hover: linear-gradient(180deg, #7F67BE 0%, #986176 100%);
+        }
+        .dark {
+            --sb-track: rgba(20, 18, 24, 0.75);
+            --sb-track-edge: rgba(73, 69, 79, 0.45);
+            --sb-thumb: linear-gradient(180deg, #7B62C4 0%, #D0BCFF 55%, #EFB8C8 100%);
+            --sb-thumb-hover: linear-gradient(180deg, #957EDB 0%, #E4D6FF 55%, #F8CCD9 100%);
+        }
+
+        /* Chrome / Edge / Safari */
+        ::-webkit-scrollbar {
+            width: 14px;
+            height: 14px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--sb-track);
+            border-left: 1px solid var(--sb-track-edge);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--sb-thumb);
+            background-clip: padding-box;
+            border: 3.5px solid transparent;
+            border-radius: 9999px;
+            min-height: 56px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--sb-thumb-hover);
+            background-clip: padding-box;
+            border-width: 2.5px;
+        }
+        ::-webkit-scrollbar-thumb:active {
+            background: var(--sb-thumb-hover);
+            background-clip: padding-box;
+            border-width: 2px;
+        }
+        ::-webkit-scrollbar-button {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+        ::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+
+        /* Firefox (gradients are not supported there, so a flat colour) */
+        @supports not selector(::-webkit-scrollbar) {
+            html { scrollbar-width: thin; scrollbar-color: #6750A4 transparent; }
+            html.dark { scrollbar-color: #D0BCFF transparent; }
+        }
+
+        /* ==========================================================
+           Soft Text Selection (translucent, keeps the text colour)
+           ========================================================== */
+        ::selection {
+            background-color: rgba(103, 80, 164, 0.24);
+            text-shadow: none;
+        }
+        ::-moz-selection {
+            background-color: rgba(103, 80, 164, 0.24);
+            text-shadow: none;
+        }
+        .dark ::selection {
+            background-color: rgba(208, 188, 255, 0.26);
+        }
+        .dark ::-moz-selection {
+            background-color: rgba(208, 188, 255, 0.26);
+        }
     </style>
 </head>
-<body class="bg-[#FEF7FF] dark:bg-[#141218] text-[#1D1B20] dark:text-[#E6E0E9] font-sans antialiased transition-colors duration-500 min-h-screen flex flex-col overflow-x-hidden selection:bg-[#EADDFF] selection:text-[#21005D]">
+<body class="bg-[#FEF7FF] dark:bg-[#141218] text-[#1D1B20] dark:text-[#E6E0E9] font-sans antialiased transition-colors duration-500 min-h-screen flex flex-col overflow-x-hidden">
 
     <!-- Custom Interactive Fluid Cursor -->
     <div id="custom-cursor" class="hidden md:block"></div>
@@ -320,10 +652,10 @@
         </div>
     </header>
 
-    <main class="flex-grow pt-20 relative z-10">
+    <main class="site-main flex-grow relative z-10">
         
-        <section id="hero" class="min-h-[90vh] flex items-center justify-center relative px-4 sm:px-6 lg:px-8 py-16">
-            <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <section id="hero" class="min-h-[auto] sm:min-h-[90vh] flex items-center justify-center relative px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+            <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
                 
                 <div class="lg:col-span-7 space-y-6 text-center lg:text-left reveal">
                     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-md-full bg-[#EADDFF] dark:bg-[#4F378B] text-[#21005D] dark:text-[#EADDFF] text-xs sm:text-sm font-semibold tracking-wide shadow-md-1 hover-trigger">
@@ -331,7 +663,7 @@
                         <span>Особисте Портфоліо • 15 років</span>
                     </div>
 
-                    <h1 class="text-4xl sm:text-6xl font-black text-[#1D1B20] dark:text-[#E6E0E9] tracking-tight leading-tight">
+                    <h1 class="text-[2.25rem] leading-[1.1] sm:text-6xl sm:leading-tight font-black text-[#1D1B20] dark:text-[#E6E0E9] tracking-tight">
                         Привіт! Я <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#6750A4] via-[#7D5260] to-[#D0BCFF]">Андрій</span> 
                     </h1>
 
@@ -339,12 +671,12 @@
                         Ласкаво просимо до мого власного інтерактивного простору! Тут зібрано інформацію про мене, мої зацікавлення, сильні сторони, досягнення та особисті думки.
                     </p>
 
-                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
-                        <a href="#about" class="bg-[#6750A4] dark:bg-[#D0BCFF] text-white dark:text-[#381E72] px-7 py-4 rounded-md-full font-medium text-base shadow-md-2 hover:shadow-glow-purple transition-all duration-300 flex items-center gap-3 ripple magnetic-btn hover-trigger">
+                    <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-4 w-full">
+                        <a href="#about" class="bg-[#6750A4] dark:bg-[#D0BCFF] text-white dark:text-[#381E72] px-7 py-4 rounded-md-full font-medium text-base shadow-md-2 hover:shadow-glow-purple transition-all duration-300 flex items-center justify-center gap-3 ripple magnetic-btn hover-trigger w-full sm:w-auto">
                             <span>Дізнатися більше</span>
                             <span class="material-symbols-outlined text-xl">arrow_downward</span>
                         </a>
-                        <a href="#works" class="border-2 border-[#79747E] dark:border-[#938F99] text-[#6750A4] dark:text-[#D0BCFF] hover:bg-[#EADDFF]/40 dark:hover:bg-[#4F378B]/30 px-7 py-4 rounded-md-full font-medium text-base transition-all duration-300 flex items-center gap-3 ripple magnetic-btn hover-trigger">
+                        <a href="#works" class="border-2 border-[#79747E] dark:border-[#938F99] text-[#6750A4] dark:text-[#D0BCFF] hover:bg-[#EADDFF]/40 dark:hover:bg-[#4F378B]/30 px-7 py-4 rounded-md-full font-medium text-base transition-all duration-300 flex items-center justify-center gap-3 ripple magnetic-btn hover-trigger w-full sm:w-auto">
                             <span class="material-symbols-outlined text-xl">folder_special</span>
                             <span>Мої роботи</span>
                         </a>
@@ -353,7 +685,7 @@
 
                 <!-- Hero Photo Card with Smooth 3D Tilt -->
                 <div class="lg:col-span-5 flex flex-col items-center justify-center reveal reveal-delay-2">
-                    <div class="tilt-card glow-card w-72 h-72 sm:w-88 sm:h-88 rounded-md-xl bg-gradient-to-tr from-[#6750A4] via-[#7D5260] to-[#D0BCFF] p-1.5 shadow-md-3 hover-trigger">
+                    <div class="tilt-card glow-card w-64 h-64 sm:w-88 sm:h-88 rounded-md-xl bg-gradient-to-tr from-[#6750A4] via-[#7D5260] to-[#D0BCFF] p-1.5 shadow-md-3 hover-trigger">
                         <div class="w-full h-full rounded-[24px] bg-[#FEF7FF] dark:bg-[#1D1B20] overflow-hidden flex flex-col items-center justify-center relative group text-center p-4">
                             
                             <img src="photo-main.jpg" 
@@ -378,7 +710,7 @@
             </div>
         </section>
 
-        <section id="about" class="py-24 px-4 sm:px-6 lg:px-8 bg-[#E7E0EC]/30 dark:bg-[#1D1B20]/40 backdrop-blur-sm">
+        <section id="about" class="py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#E7E0EC]/30 dark:bg-[#1D1B20]/40 backdrop-blur-sm">
             <div class="max-w-5xl mx-auto space-y-12">
                 <div class="text-center space-y-3 reveal">
                     <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Хто я такий</span>
@@ -424,7 +756,7 @@
             </div>
         </section>
 
-        <section id="interests" class="py-24 px-4 sm:px-6 lg:px-8">
+        <section id="interests" class="py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
             <div class="max-w-6xl mx-auto space-y-12">
                 <div class="text-center space-y-3 reveal">
                     <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Чим я захоплююся</span>
@@ -498,7 +830,7 @@
             </div>
         </section>
 
-        <section id="strengths" class="py-24 px-4 sm:px-6 lg:px-8 bg-[#E7E0EC]/30 dark:bg-[#1D1B20]/40">
+        <section id="strengths" class="py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#E7E0EC]/30 dark:bg-[#1D1B20]/40">
             <div class="max-w-5xl mx-auto space-y-12">
                 <div class="text-center space-y-3 reveal">
                     <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Мої суперсили</span>
@@ -552,7 +884,7 @@
             </div>
         </section>
 
-        <section id="goals" class="py-24 px-4 sm:px-6 lg:px-8">
+        <section id="goals" class="py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
             <div class="max-w-5xl mx-auto space-y-12">
                 <div class="text-center space-y-3 reveal">
                     <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Куди я прямую</span>
@@ -610,7 +942,7 @@
             </div>
         </section>
 
-        <section id="works" class="py-24 px-4 sm:px-6 lg:px-8 bg-[#E7E0EC]/30 dark:bg-[#1D1B20]/40">
+        <section id="works" class="py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#E7E0EC]/30 dark:bg-[#1D1B20]/40">
             <div class="max-w-6xl mx-auto space-y-12">
                 <div class="text-center space-y-3 reveal">
                     <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Моя портфоліо-галерея</span>
@@ -735,7 +1067,7 @@
             </div>
         </section>
 
-        <section id="reflection" class="py-24 px-4 sm:px-6 lg:px-8">
+        <section id="reflection" class="py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
             <div class="max-w-4xl mx-auto space-y-12">
                 <div class="text-center space-y-3 reveal">
                     <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Аналіз та роздуми</span>
@@ -782,7 +1114,7 @@
     </main>
 
     <!-- Floating Action Button (FAB) -->
-    <button id="fab-top" class="fixed bottom-8 right-8 w-14 h-14 bg-[#EADDFF] dark:bg-[#4F378B] text-[#21005D] dark:text-[#EADDFF] rounded-md-xl shadow-md-3 hover:shadow-glow-purple transition-all duration-300 flex items-center justify-center opacity-0 pointer-events-none z-40 ripple magnetic-btn hover-trigger">
+    <button id="fab-top" class="fixed bottom-5 right-5 sm:bottom-8 sm:right-8 w-12 h-12 sm:w-14 sm:h-14 bg-[#EADDFF] dark:bg-[#4F378B] text-[#21005D] dark:text-[#EADDFF] rounded-md-xl shadow-md-3 hover:shadow-glow-purple transition-all duration-300 flex items-center justify-center opacity-0 pointer-events-none z-40 ripple magnetic-btn hover-trigger">
         <span class="material-symbols-outlined text-2xl">arrow_upward</span>
     </button>
 
@@ -804,7 +1136,16 @@
         window.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
+
+            // The scrollbar is drawn by the browser above the page, so the custom
+            // cursor would slip under it. Over the scrollbar, hand control back
+            // to the system cursor.
+            const overScrollbar = e.clientX >= document.documentElement.clientWidth;
+            if (cursor) cursor.classList.toggle('cursor-hidden', overScrollbar);
         });
+        // Mouse left the page (e.g. moved onto the scrollbar or out of the window)
+        document.addEventListener('mouseleave', () => cursor && cursor.classList.add('cursor-hidden'));
+        document.addEventListener('mouseenter', () => cursor && cursor.classList.remove('cursor-hidden'));
 
         function animateCursor() {
             // Lerp algorithm for buttery smooth inertia
@@ -947,7 +1288,8 @@
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
-        mobileMenuBtn.addEventListener('click', () => {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             mobileMenu.classList.toggle('hidden');
         });
 
@@ -955,6 +1297,21 @@
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
             });
+        });
+
+        // Close the mobile drawer on outside tap, Escape, or resize to desktop width
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.classList.contains('hidden') &&
+                !mobileMenu.contains(e.target) &&
+                !mobileMenuBtn.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') mobileMenu.classList.add('hidden');
+        });
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) mobileMenu.classList.add('hidden');
         });
 
         // 9. Floating Scroll-To-Top Button
@@ -972,6 +1329,400 @@
         fabTop.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+    </script>
+
+    <script>
+        /* ==========================================================
+           Custom Context Menu
+           - Shift + права кнопка миші → стандартне меню браузера
+           - Працює лише з мишею/трекпадом (на тач-екранах не чіпаємо)
+           - Поля вводу (input / textarea) теж залишаються зі стандартним меню
+           ========================================================== */
+        (function () {
+            const finePointer = window.matchMedia('(pointer: fine)');
+            const cursorEl = document.getElementById('custom-cursor');
+
+            const SECTIONS = [
+                { id: 'about',      label: 'Про мене',       icon: 'person' },
+                { id: 'interests',  label: 'Інтереси',       icon: 'interests' },
+                { id: 'strengths',  label: 'Сильні сторони', icon: 'auto_awesome' },
+                { id: 'goals',      label: 'Цілі',           icon: 'flag' },
+                { id: 'works',      label: 'Роботи',         icon: 'star' },
+                { id: 'reflection', label: 'Рефлексія',      icon: 'psychology' }
+            ];
+
+            // ---------- DOM ----------
+            const el = (tag, cls) => {
+                const n = document.createElement(tag);
+                if (cls) n.className = cls;
+                return n;
+            };
+            const icon = (name, extra) => {
+                const s = el('span', 'material-symbols-outlined ctx-ico' + (extra ? ' ' + extra : ''));
+                s.textContent = name;
+                s.setAttribute('aria-hidden', 'true');
+                return s;
+            };
+
+            const menu = el('div', 'ctx-menu');
+            menu.setAttribute('role', 'menu');
+            const sub = el('div', 'ctx-menu');
+            sub.setAttribute('role', 'menu');
+            const toast = el('div', 'ctx-toast');
+            toast.setAttribute('role', 'status');
+            document.body.append(menu, sub, toast);
+
+            const state = { open: false, trigger: null, idx: 0 };
+
+            // ---------- helpers ----------
+            let toastTimer;
+            function showToast(text) {
+                toast.textContent = text;
+                toast.classList.add('show');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+            }
+
+            async function copyText(text, message) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                } catch (err) {
+                    const ta = el('textarea');
+                    ta.value = text;
+                    ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try { document.execCommand('copy'); } catch (_) {}
+                    ta.remove();
+                }
+                showToast(message || 'Скопійовано');
+            }
+
+            const shorten = (s, n) => (s.length > n ? s.slice(0, n - 1).trimEnd() + '…' : s);
+
+            function currentSectionId() {
+                let cur = null;
+                SECTIONS.forEach(s => {
+                    const node = document.getElementById(s.id);
+                    if (node && node.getBoundingClientRect().top <= 140) cur = s.id;
+                });
+                return cur;
+            }
+
+            function makeItem(o) {
+                const b = el('button', 'ctx-item ripple');
+                b.type = 'button';
+                b.setAttribute('role', 'menuitem');
+                b.style.setProperty('--i', state.idx++);
+                b.append(icon(o.icon));
+                const label = el('span', 'ctx-label');
+                label.textContent = o.label;
+                b.append(label);
+                if (o.kbd) {
+                    const k = el('span', 'ctx-kbd');
+                    k.textContent = o.kbd;
+                    b.append(k);
+                }
+                if (o.current) b.classList.add('current');
+                if (o.disabled) b.disabled = true;
+                if (o.submenu) {
+                    b.dataset.submenu = '1';
+                    b.setAttribute('aria-haspopup', 'menu');
+                    b.setAttribute('aria-expanded', 'false');
+                    b.append(icon('chevron_right', 'ctx-chev'));
+                } else {
+                    b.addEventListener('click', () => {
+                        o.action();
+                        closeSoon();
+                    });
+                }
+                return b;
+            }
+
+            const sep = () => el('div', 'ctx-sep');
+
+            // ---------- build content ----------
+            function buildMain(ctx) {
+                state.idx = 0;
+                menu.replaceChildren();
+
+                // Back / Forward / Reload
+                const row = el('div', 'ctx-row');
+                [
+                    { icon: 'arrow_back',    title: 'Назад (Alt+←)',     fn: () => history.back(),    disabled: history.length <= 1 },
+                    { icon: 'arrow_forward', title: 'Вперед (Alt+→)',    fn: () => history.forward() },
+                    { icon: 'refresh',       title: 'Оновити (Ctrl+R)',  fn: () => location.reload() }
+                ].forEach(o => {
+                    const b = el('button', 'ctx-round ripple');
+                    b.type = 'button';
+                    b.setAttribute('role', 'menuitem');
+                    b.setAttribute('aria-label', o.title);
+                    b.title = o.title;
+                    b.style.setProperty('--i', state.idx++);
+                    b.append(icon(o.icon));
+                    b.disabled = !!o.disabled;
+                    b.addEventListener('click', () => { o.fn(); closeSoon(); });
+                    row.append(b);
+                });
+                menu.append(row);
+
+                // Context-dependent group
+                const group = [];
+                if (ctx.link) {
+                    const href = ctx.link.href;
+                    const samePage = ctx.link.hash && href.split('#')[0] === location.href.split('#')[0];
+                    group.push({
+                        icon: samePage ? 'subdirectory_arrow_right' : 'open_in_new',
+                        label: samePage ? 'Перейти до розділу' : 'Відкрити посилання',
+                        action: () => {
+                            if (samePage) {
+                                const t = document.querySelector(ctx.link.hash);
+                                if (t) t.scrollIntoView({ behavior: 'smooth' });
+                            } else {
+                                window.open(href, '_blank', 'noopener');
+                            }
+                        }
+                    });
+                    group.push({
+                        icon: 'link',
+                        label: 'Копіювати адресу посилання',
+                        action: () => copyText(href, 'Посилання скопійовано')
+                    });
+                }
+                if (ctx.image) {
+                    const src = ctx.image.currentSrc || ctx.image.src;
+                    group.push({ icon: 'image', label: 'Відкрити зображення', action: () => window.open(src, '_blank', 'noopener') });
+                    group.push({ icon: 'content_copy', label: 'Копіювати адресу зображення', action: () => copyText(src, 'Адресу скопійовано') });
+                }
+                if (ctx.selection) {
+                    group.push({ icon: 'content_copy', label: 'Копіювати', kbd: 'Ctrl+C', action: () => copyText(ctx.selection) });
+                    group.push({
+                        icon: 'search',
+                        label: 'Шукати «' + shorten(ctx.selection, 22) + '»',
+                        action: () => window.open('https://www.google.com/search?q=' + encodeURIComponent(ctx.selection), '_blank', 'noopener')
+                    });
+                }
+                if (group.length) {
+                    menu.append(sep());
+                    group.forEach(g => menu.append(makeItem(g)));
+                }
+
+                // Site navigation group
+                menu.append(sep());
+                menu.append(makeItem({ icon: 'list', label: 'Розділи', submenu: true }));
+                menu.append(makeItem({
+                    icon: 'arrow_upward',
+                    label: 'Нагору',
+                    action: () => window.scrollTo({ top: 0, behavior: 'smooth' })
+                }));
+                const isDark = document.documentElement.classList.contains('dark');
+                menu.append(makeItem({
+                    icon: isDark ? 'light_mode' : 'dark_mode',
+                    label: isDark ? 'Світла тема' : 'Темна тема',
+                    action: () => document.getElementById('theme-toggle').click()
+                }));
+
+                // Page group
+                menu.append(sep());
+                menu.append(makeItem({
+                    icon: 'link',
+                    label: 'Копіювати посилання на сторінку',
+                    action: () => copyText(location.href, 'Посилання на сторінку скопійовано')
+                }));
+                menu.append(makeItem({
+                    icon: 'print',
+                    label: 'Друк',
+                    kbd: 'Ctrl+P',
+                    action: () => setTimeout(() => window.print(), 260)
+                }));
+
+                const hint = el('div', 'ctx-hint');
+                hint.textContent = 'Shift + права кнопка — стандартне меню';
+                menu.append(hint);
+            }
+
+            function buildSub() {
+                sub.replaceChildren();
+                state.idx = 0;
+                const cur = currentSectionId();
+                SECTIONS.forEach(s => {
+                    sub.append(makeItem({
+                        icon: s.id === cur ? 'radio_button_checked' : s.icon,
+                        label: s.label,
+                        current: s.id === cur,
+                        action: () => {
+                            const t = document.getElementById(s.id);
+                            if (t) t.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }));
+                });
+            }
+
+            // ---------- positioning ----------
+            const clamp = (v, min, max) => Math.max(min, Math.min(v, max));
+
+            function placeAt(node, x, y) {
+                const M = 8;
+                const vw = document.documentElement.clientWidth;
+                const vh = window.innerHeight;
+                const w = node.offsetWidth;
+                const h = node.offsetHeight;
+                let left = x + w + M > vw ? x - w : x;   // flip to the left
+                let top  = y + h + M > vh ? y - h : y;   // flip upwards
+                left = clamp(left, M, Math.max(M, vw - w - M));
+                top  = clamp(top,  M, Math.max(M, vh - h - M));
+                node.style.left = left + 'px';
+                node.style.top = top + 'px';
+                node.style.transformOrigin = (x - left) + 'px ' + (y - top) + 'px';
+            }
+
+            function openSub(trigger) {
+                if (state.trigger === trigger && sub.classList.contains('open')) return;
+                closeSub();
+                buildSub();
+                state.trigger = trigger;
+                trigger.classList.add('sub-open');
+                trigger.setAttribute('aria-expanded', 'true');
+
+                const r = trigger.getBoundingClientRect();
+                const mr = menu.getBoundingClientRect();
+                // make measurable, then place next to the menu (flip if no room)
+                sub.style.left = '0px';
+                sub.style.top = '0px';
+                const w = sub.offsetWidth;
+                const vw = document.documentElement.clientWidth;
+                const x = mr.right + 6 + w + 8 > vw ? mr.left - 6 - w : mr.right + 6;
+                placeAt(sub, x, r.top - 8);
+                sub.style.transformOrigin = (x < mr.left ? 'right' : 'left') + ' top';
+                sub.classList.add('open');
+            }
+
+            function closeSub(refocus) {
+                sub.classList.remove('open');
+                if (state.trigger) {
+                    state.trigger.classList.remove('sub-open');
+                    state.trigger.setAttribute('aria-expanded', 'false');
+                    if (refocus) state.trigger.focus({ preventScroll: true });
+                    state.trigger = null;
+                }
+            }
+
+            // ---------- open / close ----------
+            function openMenu(e) {
+                const t = e.target;
+                const sel = (window.getSelection().toString() || '').replace(/\s+/g, ' ').trim();
+                buildMain({
+                    link: t.closest && t.closest('a[href]'),
+                    image: t.closest && t.closest('img'),
+                    selection: sel
+                });
+                closeSub();
+                menu.style.left = '0px';
+                menu.style.top = '0px';
+                placeAt(menu, e.clientX, e.clientY);
+                // restart the entrance animation on re-open
+                menu.classList.remove('open');
+                void menu.offsetWidth;
+                menu.classList.add('open');
+                state.open = true;
+            }
+
+            function closeMenu() {
+                if (!state.open) return;
+                state.open = false;
+                closeSub();
+                menu.classList.remove('open');
+                if (cursorEl) cursorEl.classList.remove('hovered');
+            }
+            // small delay so the ripple is visible before the menu fades out
+            const closeSoon = () => setTimeout(closeMenu, 140);
+
+            // ---------- events ----------
+            document.addEventListener('contextmenu', (e) => {
+                if (e.target.closest && e.target.closest('.ctx-menu')) {
+                    e.preventDefault();
+                    return;
+                }
+                if (!finePointer.matches || e.shiftKey) { closeMenu(); return; }
+                if (e.target.closest && e.target.closest('input, textarea, select, [contenteditable=""], [contenteditable="true"]')) {
+                    closeMenu();
+                    return;
+                }
+                e.preventDefault();
+                openMenu(e);
+            });
+
+            document.addEventListener('pointerdown', (e) => {
+                if (state.open && !(e.target.closest && e.target.closest('.ctx-menu'))) closeMenu();
+            }, true);
+
+            window.addEventListener('scroll', closeMenu, { passive: true, capture: true });
+            window.addEventListener('resize', closeMenu);
+            window.addEventListener('blur', closeMenu);
+
+            // hover: enlarge the custom cursor & manage submenu
+            menu.addEventListener('mouseover', (e) => {
+                const item = e.target.closest('.ctx-item, .ctx-round');
+                if (cursorEl) cursorEl.classList.toggle('hovered', !!item);
+                if (!item) return;
+                if (item.dataset.submenu) openSub(item);
+                else if (sub.classList.contains('open')) closeSub();
+            });
+            sub.addEventListener('mouseover', (e) => {
+                if (cursorEl) cursorEl.classList.toggle('hovered', !!e.target.closest('.ctx-item'));
+            });
+            [menu, sub].forEach(m => m.addEventListener('mouseleave', () => {
+                if (cursorEl) cursorEl.classList.remove('hovered');
+            }));
+
+            // keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (!state.open) return;
+                const inSub = sub.classList.contains('open') && sub.contains(document.activeElement);
+                const scope = inSub ? sub : menu;
+                const items = [...scope.querySelectorAll('.ctx-item:not(:disabled), .ctx-round:not(:disabled)')];
+                const i = items.indexOf(document.activeElement);
+
+                switch (e.key) {
+                    case 'Escape':
+                        e.preventDefault();
+                        if (inSub) closeSub(true); else closeMenu();
+                        break;
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        items[(i + 1) % items.length].focus({ preventScroll: true });
+                        break;
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        items[i < 0 ? items.length - 1 : (i - 1 + items.length) % items.length].focus({ preventScroll: true });
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        items[0].focus({ preventScroll: true });
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        items[items.length - 1].focus({ preventScroll: true });
+                        break;
+                    case 'ArrowRight':
+                    case 'Enter':
+                    case ' ':
+                        if (!inSub && document.activeElement && document.activeElement.dataset && document.activeElement.dataset.submenu) {
+                            e.preventDefault();
+                            openSub(document.activeElement);
+                            const first = sub.querySelector('.ctx-item');
+                            if (first) first.focus({ preventScroll: true });
+                        }
+                        break;
+                    case 'ArrowLeft':
+                        if (inSub) { e.preventDefault(); closeSub(true); }
+                        break;
+                    case 'Tab':
+                        closeMenu();
+                        break;
+                }
+            });
+        })();
     </script>
 </body>
 </html>
