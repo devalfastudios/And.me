@@ -606,12 +606,13 @@
 
             <!-- Navigation Links -->
             <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
-                <a href="#about" class="px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Про мене</a>
-                <a href="#interests" class="px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Інтереси</a>
-                <a href="#strengths" class="px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Сильні сторони</a>
-                <a href="#goals" class="px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Цілі</a>
-                <a href="#works" class="px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Роботи</a>
-                <a href="#reflection" class="px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Рефлексія</a>
+                <a href="#about" class="px-2.5 xl:px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Про мене</a>
+                <a href="#interests" class="px-2.5 xl:px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Інтереси</a>
+                <a href="#strengths" class="px-2.5 xl:px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Сильні сторони</a>
+                <a href="#competencies" class="px-2.5 xl:px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Компетентності</a>
+                <a href="#goals" class="px-2.5 xl:px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Цілі</a>
+                <a href="#works" class="px-2.5 xl:px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Роботи</a>
+                <a href="#reflection" class="px-2.5 xl:px-4 py-2 rounded-md-full hover:bg-[#EADDFF]/50 dark:hover:bg-[#4F378B]/40 hover:text-[#6750A4] dark:hover:text-[#D0BCFF] transition-all ripple hover-trigger">Рефлексія</a>
             </nav>
 
             <div class="flex items-center gap-2">
@@ -638,6 +639,9 @@
                 </a>
                 <a href="#strengths" class="mobile-nav-link px-4 py-3 rounded-md-m hover:bg-white/40 dark:hover:bg-white/10 font-medium text-sm flex items-center gap-3">
                     <span class="material-symbols-outlined">auto_awesome</span> Сильні сторони
+                </a>
+                <a href="#competencies" class="mobile-nav-link px-4 py-3 rounded-md-m hover:bg-white/40 dark:hover:bg-white/10 font-medium text-sm flex items-center gap-3">
+                    <span class="material-symbols-outlined">workspace_premium</span> Мої компетентності
                 </a>
                 <a href="#goals" class="mobile-nav-link px-4 py-3 rounded-md-m hover:bg-white/40 dark:hover:bg-white/10 font-medium text-sm flex items-center gap-3">
                     <span class="material-symbols-outlined">flag</span> Цілі
@@ -884,7 +888,81 @@
             </div>
         </section>
 
-        <section id="goals" class="py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <section id="competencies" class="py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto space-y-12">
+                <div class="text-center space-y-3 reveal">
+                    <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Що я вмію</span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold">Мої Компетентності</h2>
+                    <div class="w-20 h-1.5 bg-gradient-to-r from-[#6750A4] to-[#7D5260] mx-auto rounded-md-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l shadow-md-1 border border-[#CAC4D0]/40 space-y-4 hover:shadow-md-3 transition-all reveal  hover-trigger">
+                        <div class="w-14 h-14 rounded-md-m bg-[#EADDFF] dark:bg-[#4F378B] text-[#21005D] dark:text-[#EADDFF] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-3xl">devices</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Інформаційно-цифрова</h3>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            Впевнено користуюся комп'ютером, програмами та ШІ-інструментами, монтую відео й редагую фото.
+                        </p>
+                    </div>
+
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l shadow-md-1 border border-[#CAC4D0]/40 space-y-4 hover:shadow-md-3 transition-all reveal reveal-delay-1 hover-trigger">
+                        <div class="w-14 h-14 rounded-md-m bg-[#E8DEF8] dark:bg-[#4A4458] text-[#1D192B] dark:text-[#E8DEF8] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-3xl">terminal</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Технічна творчість</h3>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            Створив G9 Launcher — програму для гри в Minecraft, яку продовжую оновлювати.
+                        </p>
+                    </div>
+
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l shadow-md-1 border border-[#CAC4D0]/40 space-y-4 hover:shadow-md-3 transition-all reveal reveal-delay-2 hover-trigger">
+                        <div class="w-14 h-14 rounded-md-m bg-[#FFD8E4] dark:bg-[#633B48] text-[#31111D] dark:text-[#FFD8E4] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-3xl">translate</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Іноземні мови</h3>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            Вивчаю англійську та щодня працюю над тим, щоб володіти нею краще.
+                        </p>
+                    </div>
+
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l shadow-md-1 border border-[#CAC4D0]/40 space-y-4 hover:shadow-md-3 transition-all reveal  hover-trigger">
+                        <div class="w-14 h-14 rounded-md-m bg-[#EADDFF] dark:bg-[#4F378B] text-[#21005D] dark:text-[#EADDFF] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-3xl">groups</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Соціальна та комунікативна</h3>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            Вмію працювати в команді, слухати інших і узгоджувати спільні дії.
+                        </p>
+                    </div>
+
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l shadow-md-1 border border-[#CAC4D0]/40 space-y-4 hover:shadow-md-3 transition-all reveal reveal-delay-1 hover-trigger">
+                        <div class="w-14 h-14 rounded-md-m bg-[#E8DEF8] dark:bg-[#4A4458] text-[#1D192B] dark:text-[#E8DEF8] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-3xl">trending_up</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Навчання впродовж життя</h3>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            Постійно вчуся новому й кожного дня прогресую в тому, що мені цікаво.
+                        </p>
+                    </div>
+
+                    <div class="tilt-card glow-card bg-[#FEF7FF] dark:bg-[#1D1B20] p-6 rounded-md-l shadow-md-1 border border-[#CAC4D0]/40 space-y-4 hover:shadow-md-3 transition-all reveal reveal-delay-2 hover-trigger">
+                        <div class="w-14 h-14 rounded-md-m bg-[#FFD8E4] dark:bg-[#633B48] text-[#31111D] dark:text-[#FFD8E4] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-3xl">sports_soccer</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Здоровий спосіб життя</h3>
+                        <p class="text-sm text-[#49454F] dark:text-[#CAC4D0]">
+                            Займаюся футболом, бадмінтоном і волейболом — спорт дає енергію та дисципліну.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="goals" class="py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#E7E0EC]/30 dark:bg-[#1D1B20]/40">
             <div class="max-w-5xl mx-auto space-y-12">
                 <div class="text-center space-y-3 reveal">
                     <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Куди я прямую</span>
@@ -903,15 +981,15 @@
                         <ul class="space-y-3 text-sm sm:text-base text-[#49454F] dark:text-[#CAC4D0]">
                             <li class="flex items-start gap-2.5">
                                 <span class="material-symbols-outlined text-emerald-500 text-xl">check_circle</span>
-                                <span>[ заповни: Успішно закінчити навчальний рік з хорошими оцінками]</span>
+                                <span>Успішно закінчити 9 клас</span>
                             </li>
                             <li class="flex items-start gap-2.5">
                                 <span class="material-symbols-outlined text-emerald-500 text-xl">check_circle</span>
-                                <span>[Покращити рівень володіння англійською мовою]</span>
+                                <span>Покращити знання та вміння в IT сфері</span>
                             </li>
                             <li class="flex items-start gap-2.5">
                                 <span class="material-symbols-outlined text-emerald-500 text-xl">check_circle</span>
-                                <span>[Прочитати [N] корисних книг чи освоїти нову навичку]</span>
+                                <span>Вивчити мову програмування Python</span>
                             </li>
                         </ul>
                     </div>
@@ -925,15 +1003,15 @@
                         <ul class="space-y-3 text-sm sm:text-base text-[#49454F] dark:text-[#CAC4D0]">
                             <li class="flex items-start gap-2.5">
                                 <span class="material-symbols-outlined text-[#7D5260] dark:text-[#EFB8C8] text-xl">stars</span>
-                                <span>[Обрати спеціальність та вступити до бажаного закладу вищої освіти]</span>
+                                <span>Вступити до закладу освіти після 9 класу на IT спеціаліста ( можливо для створення програм або для роботи з ШІ агентами )</span>
                             </li>
                             <li class="flex items-start gap-2.5">
                                 <span class="material-symbols-outlined text-[#7D5260] dark:text-[#EFB8C8] text-xl">stars</span>
-                                <span>[Реалізувати свій власний великий проєкт]</span>
+                                <span>Реалізувати свій власний великий проєкт G9 Laucnher на більш масштабний рівень</span>
                             </li>
                             <li class="flex items-start gap-2.5">
                                 <span class="material-symbols-outlined text-[#7D5260] dark:text-[#EFB8C8] text-xl">stars</span>
-                                <span>[Подорожувати та відкривати нові захоплення]</span>
+                                <span>Подорожувати та відкривати нові знання та вміння</span>
                             </li>
                         </ul>
                     </div>
@@ -942,7 +1020,7 @@
             </div>
         </section>
 
-        <section id="works" class="py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#E7E0EC]/30 dark:bg-[#1D1B20]/40">
+        <section id="works" class="py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
             <div class="max-w-6xl mx-auto space-y-12">
                 <div class="text-center space-y-3 reveal">
                     <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Моя портфоліо-галерея</span>
@@ -1063,11 +1141,22 @@
                         </div>
                     </div>
 
+                    <!-- More card -->
+                    <div class="tilt-card glow-card rounded-md-l border-2 border-dashed border-[#6750A4]/40 dark:border-[#D0BCFF]/40 bg-[#EADDFF]/30 dark:bg-[#4F378B]/20 p-8 flex flex-col items-center justify-center text-center space-y-4 min-h-[300px] reveal reveal-delay-2 hover-trigger">
+                        <div class="w-16 h-16 rounded-md-full bg-[#EADDFF] dark:bg-[#4F378B] text-[#21005D] dark:text-[#EADDFF] flex items-center justify-center shadow-md-1">
+                            <span class="material-symbols-outlined text-4xl">more_horiz</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#6750A4] dark:text-[#D0BCFF]">Це лише мала частина!</h3>
+                        <p class="text-sm sm:text-base text-[#49454F] dark:text-[#CAC4D0] max-w-xs leading-relaxed">
+                            Тут показано лише невелику частину моїх робіт і досягнень. Їх набагато більше!
+                        </p>
+                    </div>
+
                 </div>
             </div>
         </section>
 
-        <section id="reflection" class="py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <section id="reflection" class="py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#E7E0EC]/30 dark:bg-[#1D1B20]/40">
             <div class="max-w-4xl mx-auto space-y-12">
                 <div class="text-center space-y-3 reveal">
                     <span class="text-[#7D5260] dark:text-[#EFB8C8] font-medium text-xs tracking-widest uppercase">Аналіз та роздуми</span>
@@ -1083,7 +1172,7 @@
                             <h3>Мої думки про свій розвиток</h3>
                         </div>
                         <p class="text-sm sm:text-base text-[#49454F] dark:text-[#CAC4D0] leading-relaxed italic bg-[#EADDFF]/30 dark:bg-[#4F378B]/20 p-5 rounded-md-m border-l-4 border-[#6750A4]">
-                            "Андрію, у цьому блоці ти можеш поділитися своїми особистими думками про навчання, підсумки року, здобутий досвід та зміни в твоєму характерi!"
+                            "Вік живи- вік вчися, життя це велике навчання"
                         </p>
                     </div>
 
@@ -1093,7 +1182,7 @@
                                 <span class="material-symbols-outlined text-amber-500">lightbulb</span> Головний урок року:
                             </h4>
                             <p class="text-xs sm:text-sm text-[#49454F] dark:text-[#CAC4D0]">
-                                [Заповни думкою, наприклад: "Я зрозумів, що регулярна праця завжди дає кращий результат, ніж робота в останній момент..."]
+                                Ніколи не здавайся, і треба рухатися до мети до кінця, попри все.
                             </p>
                         </div>
 
@@ -1102,7 +1191,7 @@
                                 <span class="material-symbols-outlined text-rose-500">favorite</span> Що мене надихає:
                             </h4>
                             <p class="text-xs sm:text-sm text-[#49454F] dark:text-[#CAC4D0]">
-                                [Заповни думкою, наприклад: "Моя сім'я, вірні друзі та прагнення стати кращою версією себе щодня..."]
+                                Сім'я, друзі які підтримають, мотивація до дії.
                             </p>
                         </div>
                     </div>
@@ -1346,6 +1435,7 @@
                 { id: 'about',      label: 'Про мене',       icon: 'person' },
                 { id: 'interests',  label: 'Інтереси',       icon: 'interests' },
                 { id: 'strengths',  label: 'Сильні сторони', icon: 'auto_awesome' },
+                { id: 'competencies', label: 'Компетентності', icon: 'workspace_premium' },
                 { id: 'goals',      label: 'Цілі',           icon: 'flag' },
                 { id: 'works',      label: 'Роботи',         icon: 'star' },
                 { id: 'reflection', label: 'Рефлексія',      icon: 'psychology' }
